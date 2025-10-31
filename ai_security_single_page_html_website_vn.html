@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Security & Compliance</title>
+  <meta name="description" content="Trang thông tin AI Security & Compliance bằng tiếng Việt: trụ cột bảo mật, tuân thủ, best practices." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121834;
+      --text: #e6e8ef;
+      --muted: #a6adcf;
+      --brand: #7c5cff;
+      --accent: #2ee6a6;
+      --danger: #ff5d5d;
+      --ring: 0 0 0 3px rgb(124 92 255 / 35%);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin:0; font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background: radial-gradient(1200px 600px at 80% -10%, #2b2f52 0%, transparent 60%), var(--bg); color: var(--text); }
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    .nav {
+      position: sticky; top:0; z-index: 50; backdrop-filter: saturate(180%) blur(8px);
+      background: linear-gradient(180deg, rgba(7,10,22,.85), rgba(7,10,22,.6));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 18px 20px; }
+    .nav-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px; }
+    .brand .logo{ width:30px; height:30px; border-radius:10px; background: conic-gradient(from 210deg, var(--brand), #00c2ff, #5dffa1); box-shadow:0 8px 30px rgba(124,92,255,.35); }
+    .nav a { opacity:.9; font-weight:600; padding:8px 12px; border-radius: 10px; }
+    .nav a:hover { background: rgba(255,255,255,.06); }
+    .cta { background: linear-gradient(120deg, var(--brand), #00c2ff); color:white; padding:10px 14px; border-radius: 12px; box-shadow:0 8px 25px rgba(124,92,255,.35); }
+
+    /* Hero */
+    .hero { padding: 72px 20px 40px; text-align:center; }
+    .hero h1{ font-size: clamp(32px, 5vw, 52px); line-height:1.1; margin: 0 0 14px; }
+    .hero p{ margin: 0 auto; max-width: 760px; color: var(--muted); font-size: clamp(16px, 2.3vw, 18px); }
+    .hero .actions{ display:flex; justify-content:center; gap:12px; margin-top:24px; flex-wrap:wrap; }
+    .btn{ display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.1); background:#151a34; cursor:pointer; font-weight:600; }
+    .btn:hover{ box-shadow: var(--ring); }
+    .btn.primary{ background: linear-gradient(120deg, var(--brand), #00c2ff); border-color: transparent; }
+
+    /* Sections */
+    section { padding: 52px 20px; }
+    h2 { font-size: clamp(24px, 4vw, 36px); margin: 0 0 22px; }
+    .muted { color: var(--muted); }
+
+    /* Grid Cards */
+    .grid{ display:grid; gap:18px; grid-template-columns: repeat(12, 1fr); }
+    .card{ grid-column: span 12; background: linear-gradient(180deg, #141b3a, #0f1530); border: 1px solid rgba(255,255,255,.06); border-radius: var(--radius); padding:18px; position:relative; overflow:hidden; }
+    .card:hover{ transform: translateY(-2px); transition: transform .2s ease; }
+    .card .icon{ width:42px; height:42px; border-radius:12px; background: rgba(124,92,255,.15); display:grid; place-items:center; margin-bottom:10px; }
+    .card h3{ margin: 6px 0 6px; font-size: 18px; }
+    .card p{ margin:0; color: var(--muted); }
+
+    .col-6 { grid-column: span 12; }
+    @media (min-width: 800px){ .col-6{ grid-column: span 6; } }
+
+    /* Checklist */
+    .checklist{ display:grid; gap:12px; }
+    .check{ display:flex; gap:12px; align-items:flex-start; padding:14px; border-radius:14px; background:#0e1430; border:1px solid rgba(255,255,255,.06); }
+    .check svg{ flex: 0 0 auto; }
+
+    /* Footer */
+    footer{ padding: 40px 20px; color: var(--muted); border-top: 1px solid rgba(255,255,255,.08); background: #0a0f20; }
+
+    /* Badge */
+    .badge { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background: rgba(46,230,166,.12); color:#b9ffe6; border:1px solid rgba(46,230,166,.3); font-weight:600; font-size:14px; }
+
+    /* Table */
+    table { width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius: 14px; border:1px solid rgba(255,255,255,.08); }
+    th, td { text-align:left; padding:14px; }
+    thead { background:#13193a; }
+    tbody tr:nth-child(even){ background:#0f1533; }
+
+    /* Floating theme toggle */
+    .theme { position: fixed; right: 18px; bottom: 18px; z-index: 60; }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-row">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>AI Security</span>
+      </div>
+      <nav>
+        <a href="#pillars">Trụ cột</a>
+        <a href="#compliance">Tuân thủ</a>
+        <a href="#best">Best Practices</a>
+        <a href="#resources" class="cta">Checklist</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" id="home">
+      <span class="badge">Bảo mật hạ tầng AI • Governance • Compliance</span>
+      <h1>Bộ khung bảo mật & tuân thủ cho hệ thống AI hiện đại</h1>
+      <p>Hướng dẫn ngắn gọn, dễ triển khai cho doanh nghiệp: mã hóa, kiểm soát truy cập, kiểm toán, đánh giá an ninh, đào tạo nhân sự, và tuân thủ các chuẩn như GDPR, HIPAA, ISO 27001, NIST AI RMF.</p>
+      <div class="actions">
+        <a class="btn primary" href="#pillars">Bắt đầu ngay</a>
+        <a class="btn" href="#compliance">Tìm hiểu tuân thủ</a>
+      </div>
+    </section>
+
+    <section id="pillars">
+      <div class="container">
+        <h2>Trụ cột bảo mật hạ tầng AI</h2>
+        <p class="muted">Các lớp phòng thủ để bảo vệ dữ liệu, mô hình và pipeline.</p>
+        <div class="grid">
+          <!-- Encryption -->
+          <article class="card col-6">
+            <div class="icon" aria-hidden="true">🔒</div>
+            <h3>Mã hóa mạnh (at-rest & in-transit)</h3>
+            <p>Sử dụng AES‑256, TLS 1.3; quản lý khóa bằng KMS/HSM; cân nhắc mã hóa đồng hình (FHE) và <em>secret management</em> cho thông số mô hình.</p>
+          </article>
+          <!-- Access control -->
+          <article class="card col-6">
+            <div class="icon" aria-hidden="true">🧑‍💼</div>
+            <h3>Kiểm soát truy cập & Zero‑Trust</h3>
+            <p>RBAC/ABAC, MFA, tách biệt môi trường (dev/stage/prod), <em>just‑in‑time</em> access; ghi nhật ký truy cập mô hình và dữ liệu nhạy cảm.</p>
+          </article>
+          <!-- Audit -->
+          <article class="card col-6">
+            <div class="icon" aria-hidden="true">🧾</div>
+            <h3>Kiểm toán & quan sát</h3>
+            <p>Audit trail toàn bộ pipeline (data → training → deployment); giám sát drift, data lineage; cảnh báo bất thường.</p>
+          </article>
+          <!-- Security assessment -->
+          <article class="card col-6">
+            <div class="icon" aria-hidden="true">🛡️</div>
+            <h3>Đánh giá an ninh chuyên sâu</h3>
+            <p>Red teaming, kiểm thử xâm nhập, kiểm tra tấn công đối kháng (adversarial), data poisoning, model inversion/membership inference.</p>
+          </article>
+          <!-- Training -->
+          <article class="card col-6">
+            <div class="icon" aria-hidden="true">🎓</div>
+            <h3>Đào tạo & văn hóa bảo mật</h3>
+            <p>Huấn luyện chống phishing/social engineering, vệ sinh dữ liệu, quy trình xử lý sự cố; diễn tập định kỳ.</p>
+          </article>
+          <!-- SDLC -->
+          <article class="card col-6">
+            <div class="icon" aria-hidden="true">⚙️</div>
+            <h3>Secure AI SDLC</h3>
+            <p>Tích hợp kiểm tra bảo mật từ thiết kế; kiểm soát phiên bản mô hình, ký/tin cậy mô hình, chính sách phát hành và rollback an toàn.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="compliance">
+      <div class="container">
+        <h2>Tuân thủ quy định & hợp tác</h2>
+        <div class="grid">
+          <article class="card col-6">
+            <div class="icon">✅</div>
+            <h3>Regular Compliance Checks</h3>
+            <p>Đối chiếu với GDPR, HIPAA, ISO/IEC 27001, SOC 2, NIST AI RMF; đánh giá DPIA, quản lý đồng ý, lưu trữ & xóa dữ liệu đúng hạn.</p>
+          </article>
+          <article class="card col-6">
+            <div class="icon">🤝</div>
+            <h3>Cross‑Industry Collaboration</h3>
+            <p>Chia sẻ threat intel, tiêu chuẩn hóa đánh giá rủi ro mô hình, tham gia cộng đồng an ninh AI và cơ quan quản lý.</p>
+          </article>
+          <article class="card col-6">
+            <div class="icon">🛡️</div>
+            <h3>Robust Security Protocols</h3>
+            <p>Quy trình IRP/SOC cho AI (phát hiện‑ứng phó‑khắc phục), BCP/DR cho hạ tầng AI, kiểm soát nhà cung cấp & chuỗi cung ứng.</p>
+          </article>
+          <article class="card col-6">
+            <div class="icon">🔍</div>
+            <h3>Minh bạch & đạo đức</h3>
+            <p>XAI, quản trị thiên lệch (bias), kiểm soát sử dụng dữ liệu cá nhân; bản quyền dữ liệu huấn luyện và watermark nội dung.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="best">
+      <div class="container">
+        <h2>Best Practices nổi bật</h2>
+        <div class="checklist">
+          <div class="check">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="white" opacity=".4"/><path d="M7 12.5l3.2 3.2L17 9" stroke="white" stroke-width="2"/></svg>
+            <div>
+              <strong>Differential Privacy & minimization</strong>
+              <div class="muted">Ẩn danh hóa dữ liệu huấn luyện; chỉ thu thập dữ liệu tối thiểu cần thiết.</div>
+            </div>
+          </div>
+          <div class="check">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="white" opacity=".4"/><path d="M7 12.5l3.2 3.2L17 9" stroke="white" stroke-width="2"/></svg>
+            <div>
+              <strong>Data & Model Lineage</strong>
+              <div class="muted">Theo dõi nguồn gốc dữ liệu, cấu hình training, phiên bản mô hình; ký và xác thực mô hình (model signing).</div>
+            </div>
+          </div>
+          <div class="check">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="white" opacity=".4"/><path d="M7 12.5l3.2 3.2L17 9" stroke="white" stroke-width="2"/></svg>
+            <div>
+              <strong>Adversarial robustness</strong>
+              <div class="muted">Thử nghiệm tấn công đối kháng, phát hiện prompt injection và jailbreak ở hệ thống LLM.</div>
+            </div>
+          </div>
+          <div class="check">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="white" opacity=".4"/><path d="M7 12.5l3.2 3.2L17 9" stroke="white" stroke-width="2"/></svg>
+            <div>
+              <strong>Monitoring & Drift Detection</strong>
+              <div class="muted">Giám sát sản xuất (quality, latency, anomalies), phát hiện distribution drift và concept drift để tái huấn luyện kịp thời.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources">
+      <div class="container">
+        <h2>Checklist triển khai nhanh</h2>
+        <table aria-label="AI Security Checklist">
+          <thead>
+            <tr><th>Hạng mục</th><th>Mô tả</th><th>Trạng thái</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mã hóa dữ liệu</td><td>AES‑256, TLS 1.3, KMS/HSM</td><td>Chưa/Đang/Hoàn tất</td></tr>
+            <tr><td>Kiểm soát truy cập</td><td>RBAC/ABAC, MFA, JIT access</td><td> </td></tr>
+            <tr><td>Audit & logging</td><td>Data lineage, model registry, SIEM</td><td> </td></tr>
+            <tr><td>Đánh giá an ninh</td><td>Red team, pen test, adversarial</td><td> </td></tr>
+            <tr><td>Đào tạo nhân sự</td><td>Phishing, xử lý sự cố, bảo mật dữ liệu</td><td> </td></tr>
+            <tr><td>Tuân thủ</td><td>GDPR/HIPAA/ISO 27001/NIST AI RMF</td><td> </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div>© 2025 AI Security Playbook • Thiết kế bởi bạn.</div>
+      <div class="muted">Mẫu web tĩnh: không thu thập dữ liệu, tối ưu cho trình bày và đào tạo nội bộ.</div>
+    </div>
+  </footer>
+
+  <div class="theme">
+    <button class="btn" id="toggleTheme" aria-label="Chuyển chủ đề">🌗 Chế độ tương phản</button>
+  </div>
+
+  <script>
+    // Lightweight theme toggle (adds high-contrast mode)
+    const btn = document.getElementById('toggleTheme');
+    let high = false;
+    btn.addEventListener('click', () => {
+      high = !high;
+      document.body.style.filter = high ? 'contrast(1.12) saturate(1.05)' : 'none';
+    });
+
+    // Keyboard focus ring helper
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Tab'){ document.body.classList.add('kbd'); }});
+  </script>
+</body>
+</html>
